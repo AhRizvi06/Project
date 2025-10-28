@@ -1,0 +1,243 @@
+<% layout('/layouts/boilerplate.ejs') -%>
+    <style>
+        #filters {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+
+        }
+
+        .filter {
+
+            text-align: center;
+            margin-top: 1.5rem;
+
+            margin-right: 3rem;
+            opacity: 0.7;
+        }
+
+        .filter a {
+            text-decoration: none !important;
+            color: black;
+            opacity: 0.8;
+
+        }
+
+
+        .filter:hover {
+            opacity: 1;
+            cursor: pointer;
+        }
+
+        .filter p {
+            font-size: 0.8rem;
+        }
+
+        .tax-toggle {
+            border: 1px solid black;
+            border-radius: 0.5rem;
+            height: 1rem;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            margin-left: 10rem;
+
+        }
+
+        .tax-info {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            #filters {
+                gap: 1rem;
+                padding: 0.75rem;
+            }
+
+            .filter i {
+                font-size: 1.2rem;
+            }
+
+            .filter p {
+                font-size: 0.8rem;
+            }
+
+            .tax-toggle {
+                display: none;
+                /* Hide tax toggle on small screens */
+            }
+        }
+
+        @media (min-width: 769px) {
+            #filters {
+                flex-wrap: wrap;
+                /* Wrap into multiple rows if space allows */
+                justify-content: flex-start;
+            }
+
+            .tax-toggle {
+                margin-left: auto;
+            }
+        }
+    </style>
+
+    <body>
+        <!-- <h3>All Listings</h3> -->
+        <!-- <div id="filters">
+            <div class="filter">
+                <div><i class="fa-solid fa-fire"></i></div>
+                <p>Tranding</p>
+            </div>
+            <div class="filter">
+                <div><i class="fa-solid fa-bed"></i></div>
+                <p>Rooms</p>
+            </div>
+            <div class="filter">
+                <div><i class="fa-solid fa-person-swimming"></i></div>
+                <p>Pools</p>
+            </div>
+            <div class="filter">
+                <div><i class="fa-solid fa-mountain"></i></div>
+                <p>Mountains</p>
+            </div>
+            <div class="filter">
+                <div><i class="fa-solid fa-snowflake"></i></div>
+                <p>Arctic</p>
+            </div>
+            <div class="filter">
+                <div><i class="fa-brands fa-fort-awesome"></i></div>
+                <p>Castle</p>
+            </div>
+            <div class="filter">
+                <div><i class="fa-solid fa-ship"></i></div>
+                <p>Boats</p>
+            </div>
+            <div class="filter">
+                <div><i class="fa-solid fa-umbrella-beach"></i></i></div>
+                <p>Beach</p>
+            </div> -->
+
+        <div id="filters">
+            <div class="filter">
+                <a href="/listings?category=Trending">
+                    <div><i class="fa-solid fa-fire"></i></div>
+                    <p>Trending</p>
+                </a>
+            </div>
+            <div class="filter">
+                <a href="/listings?category=Rooms">
+                    <div><i class="fa-solid fa-bed"></i></div>
+                    <p>Rooms</p>
+                </a>
+            </div>
+            <div class="filter">
+                <a href="/listings?category=Pools">
+                    <div><i class="fa-solid fa-person-swimming"></i></div>
+                    <p>Pools</p>
+                </a>
+            </div>
+            <div class="filter">
+                <a href="/listings?category=Mountains">
+                    <div><i class="fa-solid fa-mountain"></i></div>
+                    <p>Mountains</p>
+                </a>
+            </div>
+            <div class="filter">
+                <a href="/listings?category=Arctic">
+                    <div><i class="fa-solid fa-snowflake"></i></div>
+                    <p>Arctic</p>
+                </a>
+            </div>
+            <div class="filter">
+                <a href="/listings?category=Castle">
+                    <div><i class="fa-brands fa-fort-awesome"></i></div>
+                    <p>Castle</p>
+                </a>
+            </div>
+
+            <div class="filter">
+                <a href="/listings?category=Boats">
+                    <div><i class="fa-solid fa-ship"></i></div>
+                    <p>Boats</p>
+                </a>
+            </div>
+            <div class="filter">
+                <a href="/listings?category=Beach">
+                    <div><i class="fa-solid fa-umbrella-beach"></i></div>
+                    <p>Beach</p>
+                </a>
+            </div>
+
+            <div class="tax-toggle">
+                <div class="form-check-reverse form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
+                    <label class="form-check-label" for="switchCheckDefault">Show total after tax</label>
+                </div>
+            </div>
+        </div>
+        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 ">
+            <%for(let listing of allListings){%>
+                <a href="/listings/<%=listing._id%>" class="listing-link" data-price="<%=listing.price%>">
+                    <div class="card col listing-card">
+                        <img src="<%= listing.image.url %>" class="card-img-top" alt="Listing-image"
+                            style="height: 20rem;">
+                        <div class="card-img-overlay"></div>
+                        <div class="card-body">
+                            <p class="card-text">
+                                <b>
+                                    <%=listing.title%>
+                                </b><br>
+                                 BDT: &nbsp;<span class="price"><%= listing.price.toLocaleString("bn-BD") %></span>/night &nbsp; &nbsp; 
+                <i class="tax-info">+18% VAT</i>
+                            </p>
+                        </div>
+                    </div>
+                </a>
+
+                <%}%>
+        </div>
+    </body>
+    <!-- <form method="GET" action="/listings/new">
+        <button>Create new listing</button>
+    </form> -->
+
+    <!-- <script>
+        let taxSwitch = document.getElementById("switchCheckDefault");
+        taxSwitch.addEventListener("click", () => {
+            let taxInfo = document.getElementsByClassName("tax-info")
+            for (info of taxInfo) {
+                if (info.style.display !== "inline") {
+                    info.style.display = "inline";
+                } else {
+                    info.style.display = "none";
+                }
+
+            }
+        })
+
+
+    </script> -->
+    <script>
+const taxSwitch = document.getElementById("switchCheckDefault");
+
+taxSwitch.addEventListener("change", () => {
+    const listingLinks = document.querySelectorAll(".listing-link");
+
+    listingLinks.forEach(link => {
+        const basePrice = parseFloat(link.dataset.price);
+        const priceElement = link.querySelector(".price");
+        const taxInfo = link.querySelector(".tax-info");
+
+        if (taxSwitch.checked) {
+            // Show price including 18% VAT
+            const totalPrice = (basePrice * 1.18).toLocaleString("bn-BD");
+            priceElement.textContent = totalPrice;
+            taxInfo.style.display = "inline";
+        } else {
+            // Show original price
+            priceElement.textContent = basePrice.toLocaleString("bn-BD");
+            taxInfo.style.display = "none";
+        }
+    });
+});
+</script>
